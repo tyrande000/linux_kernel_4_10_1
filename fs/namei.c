@@ -123,6 +123,9 @@
 
 #define EMBEDDED_NAME_MAX	(PATH_MAX - offsetof(struct filename, iname))
 
+/*
+	尝试从当前上下文查找filename结构体，没找到的话重新创建一个并加入上下文list
+*/
 struct filename *
 getname_flags(const char __user *filename, int flags, int *empty)
 {
@@ -504,9 +507,9 @@ EXPORT_SYMBOL(path_put);
 
 #define EMBEDDED_LEVELS 2
 struct nameidata {
-	struct path	path;
+	struct path	path;			//搜索到的当前目录项
 	struct qstr	last;
-	struct path	root;
+	struct path	root;			//当前进程的根目录
 	struct inode	*inode; /* path.dentry.d_inode */
 	unsigned int	flags;
 	unsigned	seq, m_seq;
@@ -810,6 +813,9 @@ static int complete_walk(struct nameidata *nd)
 	return status;
 }
 
+/*
+	将当前进程的根目录PATH赋给nameidata结构，初始化nameidata的root_seq变量
+*/
 static void set_root(struct nameidata *nd)
 {
 	struct fs_struct *fs = current->fs;
@@ -846,6 +852,9 @@ static inline void path_to_nameidata(const struct path *path,
 	nd->path.dentry = path->dentry;
 }
 
+/*
+	初始化nameidata的当前目录path及inode
+*/
 static int nd_jump_root(struct nameidata *nd)
 {
 	if (nd->flags & LOOKUP_RCU) {
@@ -2133,6 +2142,9 @@ OK:
 	}
 }
 
+/*
+	根据flags标志位，初始化nameidata结构的path,inode等变量
+*/
 static const char *path_init(struct nameidata *nd, unsigned flags)
 {
 	int retval = 0;

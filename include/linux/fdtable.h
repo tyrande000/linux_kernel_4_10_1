@@ -47,19 +47,20 @@ struct files_struct {
   /*
    * read mostly part
    */
-	atomic_t count;
+	atomic_t count;				//共享该表的进程数目
 	bool resize_in_progress;
 	wait_queue_head_t resize_wait;
 
+	//文件描述符表
 	struct fdtable __rcu *fdt;
 	struct fdtable fdtab;
   /*
    * written part on a separate cache line in SMP
    */
-	spinlock_t file_lock ____cacheline_aligned_in_smp;
-	unsigned int next_fd;
-	unsigned long close_on_exec_init[1];
-	unsigned long open_fds_init[1];
+	spinlock_t file_lock ____cacheline_aligned_in_smp;	//用于表中字段读写自旋锁
+	unsigned int next_fd;								//已分配的最大文件描述符 + 1
+	unsigned long close_on_exec_init[1];				//执行exec()时需要关闭的文件描述符集合
+	unsigned long open_fds_init[1];						//文件描述符的初始集合
 	unsigned long full_fds_bits_init[1];
 	struct file __rcu * fd_array[NR_OPEN_DEFAULT];
 };

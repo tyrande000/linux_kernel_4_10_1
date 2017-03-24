@@ -7,11 +7,11 @@
 
 struct fs_struct {
 	int users;
-	spinlock_t lock;
-	seqcount_t seq;
-	int umask;
+	spinlock_t lock;		//用于表中字段的读写自旋锁
+	seqcount_t seq;			
+	int umask;				//当打开文件,设置文件权限时所使用的位掩码
 	int in_exec;
-	struct path root, pwd;
+	struct path root, pwd;	//根目录,当前目录
 };
 
 extern struct kmem_cache *fs_cachep;

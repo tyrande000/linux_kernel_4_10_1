@@ -246,6 +246,9 @@ extern void __audit_inode_child(struct inode *parent,
 extern void __audit_seccomp(unsigned long syscall, long signr, int code);
 extern void __audit_ptrace(struct task_struct *t);
 
+/*
+	如果audit_context为空或者audit_context.dummy为1，返回true
+*/
 static inline bool audit_dummy_context(void)
 {
 	void *p = current->audit_context;

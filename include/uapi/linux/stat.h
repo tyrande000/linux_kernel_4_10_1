@@ -25,19 +25,19 @@
 #define S_ISSOCK(m)	(((m) & S_IFMT) == S_IFSOCK)
 
 #define S_IRWXU 00700
-#define S_IRUSR 00400
-#define S_IWUSR 00200
-#define S_IXUSR 00100
+#define S_IRUSR 00400		//Read permission bit for the owner of the file. On many systems this bit is 0400
+#define S_IWUSR 00200		//Write permission bit for the owner of the file. Usually 0200
+#define S_IXUSR 00100		//Execute (for ordinary files) or search (for directories) permission bit for the owner of the file. Usually 0100
 
 #define S_IRWXG 00070
-#define S_IRGRP 00040
-#define S_IWGRP 00020
-#define S_IXGRP 00010
+#define S_IRGRP 00040		//Read permission bit for the group owner of the file. Usually 040.
+#define S_IWGRP 00020		//Write permission bit for the group owner of the file. Usually 020.
+#define S_IXGRP 00010		//Execute or search permission bit for the group owner of the file. Usually 010.
 
 #define S_IRWXO 00007
-#define S_IROTH 00004
-#define S_IWOTH 00002
-#define S_IXOTH 00001
+#define S_IROTH 00004		//Read permission bit for other users. Usually 04.
+#define S_IWOTH 00002		//Write permission bit for other users. Usually 02.
+#define S_IXOTH 00001		//Execute or search permission bit for other users. Usually 01.
 
 #endif
 

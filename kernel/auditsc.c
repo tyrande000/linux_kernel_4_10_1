@@ -1672,6 +1672,9 @@ retry:
 #endif
 }
 
+/*
+	分配audit_names结构体，并加入当前上下文的list
+*/
 static struct audit_names *audit_alloc_name(struct audit_context *context,
 						unsigned char type)
 {
@@ -1696,6 +1699,7 @@ static struct audit_names *audit_alloc_name(struct audit_context *context,
 }
 
 /**
+ * 在audit_context结构体中，按用户态指针查找filename结构体
  * audit_reusename - fill out filename with info from existing entry
  * @uptr: userland ptr to pathname
  *
@@ -1721,6 +1725,7 @@ __audit_reusename(const __user char *uptr)
 }
 
 /**
+ * 分配audit_names并初始化结构体
  * audit_getname - add a name to the list
  * @name: name to add
  *
